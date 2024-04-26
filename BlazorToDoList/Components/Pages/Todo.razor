@@ -1,7 +1,40 @@
 ﻿@page "/todo"
+@rendermode InteractiveServer
 
 <h3>Todo</h3>
 
-@code {
 
+@* render the list of ToDos. create an unordered list*@
+<ul>
+    @foreach(var todo in todos)
+    {
+        <li>@todo.Title</li> @* render individual list items  *@
+    }
+</ul>
+
+@* add some todos *@
+<input @bind="newToDo" /> @* input'ta ne varsa bu dize değişkenine bağlı olmalıdır *@
+<button @onclick="Add">Add</button>
+
+@code {
+    //Track the List of ToDo
+    List<ToDoItem> todos = new List<ToDoItem>();
+    string newToDo = ""; //add a string field
+
+    public class ToDoItem
+    {
+        public string Title{ get; set; }
+        public bool IsDone{ get; set; }
+    }
+
+
+
+    private void Add(MouseEventArgs e)
+    {
+        if (!string.IsNullOrWhiteSpace(newToDo))
+        {
+            todos.Add(new ToDoItem { Title = newToDo });
+            newToDo = ""; //clear out the new todo field to be empty again. Two way data binding, so we can update the field, it should update the input as well.
+        }
+    }
 }
