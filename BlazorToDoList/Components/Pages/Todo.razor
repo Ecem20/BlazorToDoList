@@ -19,11 +19,48 @@
     .todo-input {
         margin-right: 10px;
     }
+
+    /* Dropdown menüyü özelleştirmek için*/
+    .custom-dropdown {
+        padding: 5px 10px;
+        font-size: 16px;
+        border: 1px solid #ccc;
+        border-radius: 5px;
+        background-color: #f9f9f9;
+        color: #333;
+    }
+
+        .custom-dropdown:hover {
+            background-color: #e9e9e9;
+        }
+
+        .custom-dropdown:focus {
+            outline: none;
+            border-color: #007bff;
+            box-shadow: 0 0 0 0.1rem rgba(0, 123, 255, 0.25);
+        }
+
+    .todo-header {
+        color: #007bff; /* Başlık rengini değiştir */
+    }
+
 </style>
 
-<h3>Todo (@todos.Count(t => !t.IsDone))</h3> @* count the unfinished ToDos *@
 
+<h3 class="todo-header">Todo (@todos.Count(t => !t.IsDone))</h3> @* count the unfinished ToDos *@
+
+<hr />
+
+<select @onchange="FilterTodos" class="custom-dropdown">
+    <option value="all">All</option>
+    <option value="completed">Completed</option>
+    <option value="uncompleted">Uncompleted</option>
+</select>
+
+<h3></h3>
 @* render the list of ToDos. create an unordered list*@
+
+
 <ul>
     @foreach (var todo in todos)
     {
@@ -31,7 +68,7 @@
             <input type=checkbox @bind="todo.IsDone" />
             <input @bind="todo.Title" />
             <button @onclick="() => Delete(todo)">Delete</button>
-        </li> @* render individual list items  *@
+        </li>  @* render individual list items   *@
     }
 </ul>
 
@@ -41,6 +78,9 @@
 
 @code {
     List<ToDoItem> todos = new List<ToDoItem>(); //Track the List of ToDo
+
+    List<ToDoItem> filteredTodos = new List<ToDoItem>();
+    
     string newToDo = ""; //add a string field
 
     public class ToDoItem
@@ -61,5 +101,23 @@
     void Delete(ToDoItem todo)
     {
         todos.Remove(todo);
+    }
+
+    private void FilterTodos(ChangeEventArgs e)
+    {
+        string selectedValue = e.Value.ToString();
+
+        if (selectedValue == "completed")
+        {
+            filteredTodos = todos.Where(t => t.IsDone).ToList();
+        }
+        else if (selectedValue == "uncompleted")
+        {
+            filteredTodos = todos.Where(t => !t.IsDone).ToList();
+        }
+        else
+        {
+            filteredTodos = todos;
+        }
     }
 }
