@@ -1,4 +1,4 @@
-﻿@page "/counter"
+﻿@* @page "/counter"
 @rendermode InteractiveServer
 
 <PageTitle>Counter</PageTitle>
@@ -37,4 +37,4 @@
         await Task.Delay(2000);
         SearchResult = $"Found {Random.Shared.Next()} results";
     }
-}
+} *@
