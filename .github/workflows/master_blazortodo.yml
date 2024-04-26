@@ -1,7 +1,7 @@
 # Docs for the Azure Web Apps Deploy action: https://github.com/Azure/webapps-deploy
 # More GitHub Actions for Azure: https://github.com/Azure/actions
 
-name: Build and deploy ASP.Net Core app to Azure Web App - azureblazorweb
+name: Build and deploy ASP.Net Core app to Azure Web App - BlazorToDo
 
 on:
   push:
@@ -52,15 +52,15 @@ jobs:
       - name: Login to Azure
         uses: azure/login@v1
         with:
-          client-id: ${{ secrets.AZUREAPPSERVICE_CLIENTID_A84AD0085E17445487E2FD386E905366 }}
-          tenant-id: ${{ secrets.AZUREAPPSERVICE_TENANTID_D8EB2C427E49490C8A4E7C39289E87CB }}
-          subscription-id: ${{ secrets.AZUREAPPSERVICE_SUBSCRIPTIONID_BF762CCF479C4B308A86E5C89ABE8E8D }}
+          client-id: ${{ secrets.AZUREAPPSERVICE_CLIENTID_FD003EB885CB441F957066210672257A }}
+          tenant-id: ${{ secrets.AZUREAPPSERVICE_TENANTID_75C2527F1E324453B7EF7B2ED5A6B8AA }}
+          subscription-id: ${{ secrets.AZUREAPPSERVICE_SUBSCRIPTIONID_A86CF533D672407DA5B4E5370264F3DD }}
 
       - name: Deploy to Azure Web App
         id: deploy-to-webapp
         uses: azure/webapps-deploy@v2
         with:
-          app-name: 'azureblazorweb'
+          app-name: 'BlazorToDo'
           slot-name: 'Production'
           package: .
           
