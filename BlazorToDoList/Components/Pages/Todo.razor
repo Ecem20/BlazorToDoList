@@ -3,7 +3,6 @@
 
 <h3>Todo (@todos.Count(t => !t.IsDone))</h3> @* count the unfinished ToDos *@
 
-
 @* render the list of ToDos. create an unordered list*@
 <ul>
     @foreach (var todo in todos)
@@ -44,4 +43,26 @@
         todos.Remove(todo);
     }
 
+    private void FilterTodos(ChangeEventArgs e)
+    {
+        // Retrieve the selected value from the dropdown
+        string selectedValue = e.Value.ToString();
+
+        if (selectedValue == "completed")
+        {
+            var completedTodos = todos.Where(t => t.IsDone);
+        }
+        else if (selectedValue == "uncompleted")
+        {
+            var completedTodos = todos.Where(t => !t.IsDone);
+        }
+        else
+        {
+            var completedTodos = todos;
+        }
+    }
+    private void selectedFilter()
+    {
+        throw new NotImplementedException();
+    }
 }
