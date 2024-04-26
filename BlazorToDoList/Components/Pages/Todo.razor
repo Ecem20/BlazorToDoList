@@ -1,6 +1,27 @@
 ﻿@page "/todo"
 @rendermode InteractiveServer
 
+<style>
+    /* Styling for the todo list */
+    ul {
+        list-style-type: none;
+        padding: 0;
+    }
+
+    li {
+        margin-bottom: 10px;
+    }
+
+    .completed {
+        text-decoration: line-through;
+        color: #888;
+    }
+
+    .todo-input {
+        margin-right: 10px;
+    }
+</style>
+
 <h3>Todo (@todos.Count(t => !t.IsDone))</h3> @* count the unfinished ToDos *@
 
 @* render the list of ToDos. create an unordered list*@
@@ -41,28 +62,5 @@
     void Delete(ToDoItem todo)
     {
         todos.Remove(todo);
-    }
-
-    private void FilterTodos(ChangeEventArgs e)
-    {
-        // Retrieve the selected value from the dropdown
-        string selectedValue = e.Value.ToString();
-
-        if (selectedValue == "completed")
-        {
-            var completedTodos = todos.Where(t => t.IsDone);
-        }
-        else if (selectedValue == "uncompleted")
-        {
-            var completedTodos = todos.Where(t => !t.IsDone);
-        }
-        else
-        {
-            var completedTodos = todos;
-        }
-    }
-    private void selectedFilter()
-    {
-        throw new NotImplementedException();
     }
 }
