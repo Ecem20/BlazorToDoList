@@ -42,17 +42,9 @@
 
 <hr />
 
-<select @onchange="FilterTodos" class="custom-dropdown">
-    <option value="all">All</option>
-    <option value="completed">Completed</option>
-    <option value="uncompleted">Uncompleted</option>
-</select>
-
-<h3></h3>
-
 @* render the list of ToDos.*@
 <ul>
-    @foreach (var todo in todos)
+    @foreach (var todo in todos @* filteredTodos *@)
     {
         <li>
             <input type=checkbox @bind="todo.IsDone" />
@@ -69,8 +61,6 @@
 @code {
     List<ToDoItem> todos = new List<ToDoItem>(); //Track the List of ToDo
 
-    List<ToDoItem> filteredTodos = new List<ToDoItem>();
-    
     string newToDo = ""; //add a string field
 
     public class ToDoItem
@@ -84,30 +74,12 @@
     {
         if (!string.IsNullOrWhiteSpace(newToDo))
         {
-            todos.Add(new ToDoItem { Title = newToDo });
+            todos.Add(new ToDoItem { Title = newToDo });            
             newToDo = ""; //clear out the new todo field to be empty again. Two way data binding, so we can update the field, it should update the input as well.
         }
     }
     void Delete(ToDoItem todo)
     {
         todos.Remove(todo);
-    }
-
-    private void FilterTodos(ChangeEventArgs e)
-    {
-        string selectedValue = e.Value.ToString();
-
-        if (selectedValue == "completed")
-        {
-            filteredTodos = todos.Where(t => t.IsDone).ToList();
-        }
-        else if (selectedValue == "uncompleted")
-        {
-            filteredTodos = todos.Where(t => !t.IsDone).ToList();
-        }
-        else
-        {
-            filteredTodos = todos;
-        }
     }
 }
