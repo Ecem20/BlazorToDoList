@@ -38,13 +38,20 @@
 </style>
 
 
-<h3 class="todo-header">Todo (@todos.Count(t => !t.IsDone))</h3> @* count the unfinished ToDos *@
+<h3 class="todo-header">Todo</h3> @* count the unfinished ToDos *@
+
+<div class="status-summary">
+    <p><strong style="color: red;">Completed:</strong> <strong>@todos.Count(t => t.IsDone)</strong></p>
+    <p><strong style="color: red;">Remaining:</strong> <strong>@todos.Count(t => !t.IsDone)</strong></p>
+</div>
+
+
 
 <hr />
 
 @* render the list of ToDos.*@
 <ul>
-    @foreach (var todo in todos @* filteredTodos *@)
+    @foreach (var todo in todos)
     {
         <li>
             <input type=checkbox @bind="todo.IsDone" />
